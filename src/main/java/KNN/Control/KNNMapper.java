@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class KNNMapper extends Mapper<LongWritable, Text, Instance, DistanceAndLabel> {
-    private ArrayList<Instance> testSet = new ArrayList<Instance>();
+    private ArrayList<Instance> testSet = new ArrayList<>();
 
     private DistanceAndLabel outV;
 

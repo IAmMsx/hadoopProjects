@@ -96,9 +96,12 @@ public class Instance implements WritableComparable<Instance> {
 
     @Override
     public String toString() {
-        return "Instance{" +
-                "attributeValues=" + Arrays.toString(attributeValues) +
-                ", label=" + label +
-                '}';
+        StringBuilder out = new StringBuilder();
+        int length = this.getAttributeValues().length;
+        for (double attributeValue : attributeValues) {
+            out.append(String.valueOf(attributeValue));
+            out.append("\t");
+        }
+        return out + String.valueOf(this.label);
     }
 }

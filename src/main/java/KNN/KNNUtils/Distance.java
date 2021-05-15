@@ -16,6 +16,6 @@ public class Distance {
             sum += Math.pow(a[i] - b[i], 2);
         }
 
-        return sum;
+        return Math.sqrt(sum);
     }
 }

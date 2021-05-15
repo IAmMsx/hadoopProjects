@@ -21,7 +21,7 @@ public class Sort {
         return result;
     }
 
-    private static int indexOfMax(ArrayList<DistanceAndLabel> list) {
+    public static int indexOfMax(ArrayList<DistanceAndLabel> list) {
 //        返回集合最大值的索引
         int maxIndex = 0;
         for (int i = 0; i < list.size(); i++) {
