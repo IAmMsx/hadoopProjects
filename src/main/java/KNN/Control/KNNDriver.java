@@ -33,7 +33,8 @@ public class KNNDriver {
 
 //        conf.setInt("K", Integer.parseInt(args[4]));
 //        job.addCacheFile(new URI(args[2]));//测试集路径
-        job.addCacheFile(new URI("src/main/java/KNN/testDataSet.txt"));
+//        job.addCacheFile(new URI("src/main/java/KNN/testDataSet.txt"));
+        job.addCacheFile(new URI("D:\\dataSet\\mnist_dataset_csv\\mnist_test.csv"));
 
         job.setJarByClass(KNNDriver.class);//2.
 
@@ -51,8 +52,10 @@ public class KNNDriver {
 
 //        FileInputFormat.setInputPaths(job, new Path(args[1]));//训练集路径
 //        FileOutputFormat.setOutputPath(job, new Path(args[3]));//输出路径
-        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/trainDataSet.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output1"));
+//        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/trainDataSet.txt"));
+//        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output1"));
+        FileInputFormat.setInputPaths(job, new Path("D:\\dataSet\\mnist_dataset_csv\\mnist_train.csv"));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output"));
 
         boolean result = job.waitForCompletion(true);
         System.exit(result ? 0 : 1);

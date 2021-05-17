@@ -28,7 +28,7 @@ public class KNNReducer extends Reducer<Instance, DistanceAndLabel, Text, NullWr
         }
 
         //
-        lists = Sort.getNearst(lists,k);
+//        lists = Sort.getNearst(lists,k);
         try {
             Double label = ValueOfMostFrequent.valueOfMostFrequent(lists);
             Instance outK = new Instance(key.getAttributeValues(), label);
