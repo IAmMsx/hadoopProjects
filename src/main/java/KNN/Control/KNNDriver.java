@@ -4,6 +4,7 @@ import KNN.Model.DistanceAndLabel;
 import KNN.Model.Instance;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -33,8 +34,10 @@ public class KNNDriver {
 
 //        conf.setInt("K", Integer.parseInt(args[4]));
 //        job.addCacheFile(new URI(args[2]));//测试集路径
-//        job.addCacheFile(new URI("src/main/java/KNN/testDataSet.txt"));
-        job.addCacheFile(new URI("D:\\dataSet\\mnist_dataset_csv\\mnist_test.csv"));
+//        高斯
+        job.addCacheFile(new URI("src/main/java/KNN/test500_Each.txt"));
+//        mnist
+//        job.addCacheFile(new URI("src/main/java/KNN/mnist_test.txt"));
 
         job.setJarByClass(KNNDriver.class);//2.
 
@@ -48,14 +51,16 @@ public class KNNDriver {
         job.setMapOutputValueClass(DistanceAndLabel.class);
 
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(NullWritable.class);
+        job.setOutputValueClass(IntWritable.class);
 
 //        FileInputFormat.setInputPaths(job, new Path(args[1]));//训练集路径
 //        FileOutputFormat.setOutputPath(job, new Path(args[3]));//输出路径
-//        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/trainDataSet.txt"));
-//        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output1"));
-        FileInputFormat.setInputPaths(job, new Path("D:\\dataSet\\mnist_dataset_csv\\mnist_train.csv"));
-        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output"));
+        // 高斯
+        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/train500_Each.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output1"));
+        // mnist
+//        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/mnist_train.txt"));
+//        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output"));
 
         boolean result = job.waitForCompletion(true);
         System.exit(result ? 0 : 1);

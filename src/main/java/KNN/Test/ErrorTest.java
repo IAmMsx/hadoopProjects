@@ -3,9 +3,7 @@ package KNN.Test;
 //import org.apache.hadoop.fs.FileSystem;
 
 import java.io.*;
-import java.nio.file.FileSystem;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ErrorTest {
     public static void main(String[] args) {

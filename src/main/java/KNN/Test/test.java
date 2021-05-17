@@ -12,8 +12,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -71,5 +70,25 @@ public class test {
         double[] tempDouble = {1.0, 2.0, 3.0, 4.0, 5.0};
         Instance instance = new Instance(tempDouble, 1.0);
         System.out.println(instance);
+    }
+    @Test
+    public void test() throws IOException {
+        ArrayList<Instance> testSet = new ArrayList<>();
+        ArrayList<Instance> testSet2 = new ArrayList<>();
+
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/java/KNN/test500_Each.txt"));
+        String line ;
+        while (StringUtils.isNotEmpty(line = bufferedReader.readLine())){
+            Instance testInstance = new Instance(line);
+            testSet.add(testInstance);
+            testSet2.add(testInstance);
+        }
+        for (int i = 0; i < testSet.size(); i++) {
+            System.out.print(testSet.get(i)+"\t");
+            System.out.println(testSet.get(i).compareTo(testSet2.get(i)));
+        }
+
+        IOUtils.closeStream(bufferedReader);
     }
 }

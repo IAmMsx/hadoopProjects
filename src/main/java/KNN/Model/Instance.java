@@ -15,10 +15,17 @@ public class Instance implements WritableComparable<Instance> {
     public Instance(String line) {
         String[] split = line.split("\t");
         attributeValues = new double[split.length - 1];
+
         for (int i = 0; i < split.length - 1; i++) {
             attributeValues[i] = Double.parseDouble(split[i]);
         }
         label = Double.parseDouble(split[split.length - 1]);
+
+        // mnist 标签在第一列
+//        label = Double.parseDouble(split[0]);
+//        for (int i = 1; i < split.length; i++) {
+//            attributeValues[i - 1] = Double.parseDouble(split[i]);
+//        }
     }
 
     public Instance(double[] attributeValues, double label) {
