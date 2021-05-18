@@ -22,10 +22,8 @@ import java.util.ArrayList;
 public class KNNMapper extends Mapper<LongWritable, Text, Instance, DistanceAndLabel> {
     private ArrayList<Instance> testSet = new ArrayList<>();
 
-    private DistanceAndLabel outV;
-
     @Override
-    protected void setup(Context context) throws IOException, InterruptedException {
+    protected void setup(Context context) throws IOException {
         // 将测试集封装为Instance对象，放入testSet中
         URI[] cacheFiles = context.getCacheFiles();
         FileSystem fs = FileSystem.get(context.getConfiguration());
@@ -35,7 +33,7 @@ public class KNNMapper extends Mapper<LongWritable, Text, Instance, DistanceAndL
         BufferedReader reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
 
         String line;
-        while (StringUtils.isNotEmpty(line = reader.readLine())) {
+        while ((line = reader.readLine()) != null) {
             Instance testInstance = new Instance(line);
             testSet.add(testInstance);
         }
@@ -54,7 +52,7 @@ public class KNNMapper extends Mapper<LongWritable, Text, Instance, DistanceAndL
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            outV = new DistanceAndLabel(distance, trainLabel);
+            DistanceAndLabel outV = new DistanceAndLabel(distance, trainLabel);
             context.write(testInstance, outV);
         }
     }

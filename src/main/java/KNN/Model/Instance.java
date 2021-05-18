@@ -16,7 +16,7 @@ public class Instance implements WritableComparable<Instance> {
         String[] split = line.split("\t");
         attributeValues = new double[split.length - 1];
 
-        for (int i = 0; i < split.length - 1; i++) {
+        for (int i = 0; i < attributeValues.length; i++) {
             attributeValues[i] = Double.parseDouble(split[i]);
         }
         label = Double.parseDouble(split[split.length - 1]);
@@ -53,9 +53,40 @@ public class Instance implements WritableComparable<Instance> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Instance instance = (Instance) o;
+
+        return Arrays.equals(attributeValues, instance.attributeValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(attributeValues);
+    }
+
+    @Override
+    public int compareTo(Instance o) {
+        if (o.equals(this))
+            return 0;
+        double thisSum = 0.0, oSum = 0.0;
+        for (double attributeValue : this.attributeValues) {
+            thisSum += attributeValue;
+        }
+        for (double attributeValue : o.attributeValues) {
+            oSum += attributeValue;
+        }
+        if (thisSum > oSum) return 1;
+        else return -1;
+    }
+
+
+    @Override
     public void write(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(this.attributeValues.length);
-        for (double attributeValue : attributeValues) {
+        for (double attributeValue : this.attributeValues) {
             dataOutput.writeDouble(attributeValue);
         }
         dataOutput.writeDouble(label);
@@ -63,50 +94,20 @@ public class Instance implements WritableComparable<Instance> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Instance instance = (Instance) o;
-
-        if (Double.compare(instance.label, label) != 0) return false;
-        return Arrays.equals(attributeValues, instance.attributeValues);
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = Arrays.hashCode(attributeValues);
-        temp = Double.doubleToLongBits(label);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
-
-    @Override
     public void readFields(DataInput dataInput) throws IOException {
         int len = dataInput.readInt();
         this.attributeValues = new double[len];
         for (int i = 0; i < len; i++) {
-            attributeValues[i] = dataInput.readDouble();
+            this.attributeValues[i] = dataInput.readDouble();
         }
         this.label = dataInput.readDouble();
     }
 
     @Override
-    public int compareTo(Instance o) {
-        if (!o.equals(this)) {
-            return -1;
-        }
-        return 0;
-    }
-
-    @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
-        int length = this.getAttributeValues().length;
         for (double attributeValue : attributeValues) {
-            out.append(String.valueOf(attributeValue));
+            out.append(attributeValue);
             out.append("\t");
         }
         return out + String.valueOf(this.label);

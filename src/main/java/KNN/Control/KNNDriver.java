@@ -30,7 +30,7 @@ public class KNNDriver {
         Configuration conf = new Configuration();
         conf.setInt("K", 4);
         Job job = Job.getInstance(conf);
-        job.setJobName("KNN");
+//        job.setJobName("KNN");
 
 //        conf.setInt("K", Integer.parseInt(args[4]));
 //        job.addCacheFile(new URI(args[2]));//测试集路径
@@ -57,7 +57,7 @@ public class KNNDriver {
 //        FileOutputFormat.setOutputPath(job, new Path(args[3]));//输出路径
         // 高斯
         FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/train500_Each.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output1"));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output"));
         // mnist
 //        FileInputFormat.setInputPaths(job, new Path("src/main/java/KNN/mnist_train.txt"));
 //        FileOutputFormat.setOutputPath(job, new Path("src/main/java/KNN/output"));
